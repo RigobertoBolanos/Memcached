@@ -1,10 +1,10 @@
 module Commands
-    GET = "GET"
-    GETS = "GETS"
-    SET = "SET"
-    ADD = "ADD"
-    REPLACE = "REPLACE"
-    APPEND = "APPEND"
-    PREPEND = "PREPEND"
-    CAS =  "CAS"
+  GET = 'get'.freeze
+  GETS = 'gets'.freeze
+  SET = 'set'.freeze
+  ADD = 'add'.freeze
+  REPLACE = 'replace'.freeze
+  APPEND = 'append'.freeze
+  PREPEND = 'prepend'.freeze
+  CAS = 'cas'.freeze
 end

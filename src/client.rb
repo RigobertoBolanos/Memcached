@@ -7,12 +7,14 @@ class Client
   end
 
   def start
-    s = TCPSocket.open(@hostname, @port)
-    puts 'Connection with Memcached Server stablished'
-    while (line = s.gets)     # Read lines from the socket 
-      puts line.chop       # And print with platform line terminator
-    end
+    socket = TCPSocket.open(@hostname, @port)
 
-    s.close
+    while (data = socket.gets)     # Read lines from the socket
+      puts data.chopG
+      socket.puts(gets.chomp)
+    end
+    socket.close
   end
 end
+
+Client.new(2000, 'localhost').start

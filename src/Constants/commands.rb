@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module Commands
-  GET = 'get'.freeze
-  GETS = 'gets'.freeze
-  SET = 'set'.freeze
-  ADD = 'add'.freeze
-  REPLACE = 'replace'.freeze
-  APPEND = 'append'.freeze
-  PREPEND = 'prepend'.freeze
-  CAS = 'cas'.freeze
+  GET = 'get'
+  GETS = 'gets'
+  SET = 'set'
+  ADD = 'add'
+  REPLACE = 'replace'
+  APPEND = 'append'
+  PREPEND = 'prepend'
+  CAS = 'cas'
 end

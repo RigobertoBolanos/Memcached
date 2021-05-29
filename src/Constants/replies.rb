@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 module Replies
-  STORED = 'STORED'.freeze
-  NOT_STORED = 'NOT_STORED'.freeze
-  EXIST = 'EXIST'.freeze
-  NOT_FOUND = 'NOT_FOUND'.freeze
+  STORED = 'STORED'
+  NOT_STORED = 'NOT_STORED'
+  EXIST = 'EXIST'
+  NOT_FOUND = 'NOT_FOUND'
+  NO_REPLY = 'noreply'
 end

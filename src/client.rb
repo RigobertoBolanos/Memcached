@@ -11,7 +11,6 @@ class Client
     socket = TCPSocket.open(@hostname, @port)
 
     while (data = socket.gets.chomp)
-      p data + Replies::NO_REPLY
       puts data.chomp unless data == Replies::NO_REPLY
       socket.puts(handle_user_input(gets.chomp))
     end

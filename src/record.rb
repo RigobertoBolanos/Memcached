@@ -10,4 +10,8 @@ class Record
     @cas_unique = cas_unique
     @data = data
   end
+
+  def to_s
+    "flags: #{@flags}, exptime: #{@exptime}, bytes: #{@bytes}, cas_unique: #{@cas_unique}, data: #{@data}"
+  end
 end

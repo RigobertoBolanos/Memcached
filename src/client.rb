@@ -1,18 +1,17 @@
 require 'socket'
 require_relative 'constants/replies'
+require_relative 'errors/client_error'
+require_relative 'errors/error'
 
 class Client
-  def initialize(port, hostname)
-    @port = port
-    @hostname = hostname
+  def initialize(hostname, port)
+    @socket = TCPSocket.open(hostname, port)
   end
 
   def start
-    socket = TCPSocket.open(@hostname, @port)
-
-    while (data = socket.gets.chomp)
-      puts data.chomp unless data == Replies::NO_REPLY
-      socket.puts(handle_user_input(gets.chomp))
+    p @socket.gets.chomp
+    loop do
+      handle_user_input(gets.chomp)
     end
     socket.close
   end
@@ -20,12 +19,32 @@ class Client
   def handle_user_input(input)
     command = input.partition(' ').first
     if %w[get gets].include?(command)
-      input
+      handle_retrieve_command(input)
     elsif %w[set add replace append prepend cas].include?(command)
-      data = gets.chomp
-      data = 'nodata' unless data != ''
-      "#{input} #{data}"
+      handle_storage_command(input)
+    else
+      p Error::ERROR
+    end
+  end
+
+  def handle_storage_command(input)
+    data = gets.chomp
+    data = 'nodata' unless data != ''
+    @socket.puts("#{input} #{data}")
+
+    data = @socket.gets.chomp
+    p data unless data == Replies::NO_REPLY
+  end
+
+  def handle_retrieve_command(input)
+    @socket.puts(input)
+    reply = ''
+    while reply != Replies::END_REPLY &&
+          reply != ClientError::CLIENT_ERROR &&
+          reply != Replies::NOT_FOUND
+      reply = @socket.gets.chomp
+      p reply
     end
   end
 end
-Client.new(2000, 'localhost').start
+Client.new('localhost', 2000).start

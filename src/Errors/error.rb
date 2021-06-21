@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class Error < StandardError
-  def initialize(msg = 'Nonexistent command name')
+  ERROR = 'Nonexistent command name'
+  def initialize(msg = ERROR)
     super(msg)
   end
 end

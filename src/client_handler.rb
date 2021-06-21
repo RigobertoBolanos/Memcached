@@ -17,6 +17,7 @@ class ClientHandler
   private
 
   def handle_input(input)
+    p input
     command, arguments = verify_input(input)
 
     case command
@@ -57,7 +58,7 @@ class ClientHandler
       if arguments.empty? ||
          arguments.size > 4 ||
          arguments.size < 3 ||
-         (arguments.size == 4 && arguments[4] != 'noreply')
+         (arguments.size == 4 && arguments[2] != 'noreply')
 
         raise ClientError
       end
@@ -78,22 +79,21 @@ class ClientHandler
   end
 
   def verify_retrieve_command(arguments)
-    if arguments.empty? ||
-       arguments.size != 1
-
+    if arguments.empty?
+      p 'Error arguments'
       raise ClientError
     end
   end
 
   def verify_data_bytes(arguments)
-    if (arguments.size == 6 && arguments[5] != 'nodata' && arguments[5].length != arguments[3].to_i) || # 
-       (arguments.size == 5 && arguments[4] != 'nodata' && arguments[4].length != arguments[3].to_i) || #
-       (arguments.size == 4 && arguments[3] != 'nodata' && arguments[3].length != arguments[1].to_i) || #
-       (arguments.size == 3 && arguments[2] != 'nodata' && arguments[2].length != arguments[1].to_i) || #
-       (arguments.size == 6 && arguments[5] == 'nodata' && !arguments[3].to_i != 0) ||                  #
-       (arguments.size == 5 && arguments[4] == 'nodata' && !arguments[3].to_i != 0) ||                  #
-       (arguments.size == 4 && arguments[3] == 'nodata' && !arguments[1].to_i != 0) ||                  #
-       (arguments.size == 3 && arguments[2] == 'nodata' && !arguments[1].to_i != 0)                     #
+    if (arguments.size == 6 && arguments[5] != 'nodata' && arguments[5].length != arguments[3].to_i) ||
+       (arguments.size == 5 && arguments[4] != 'nodata' && arguments[4].length != arguments[3].to_i) ||
+       (arguments.size == 4 && arguments[3] != 'nodata' && arguments[3].length != arguments[1].to_i) ||
+       (arguments.size == 3 && arguments[2] != 'nodata' && arguments[2].length != arguments[1].to_i) ||
+       (arguments.size == 6 && arguments[5] == 'nodata' && !arguments[3].to_i != 0) ||
+       (arguments.size == 5 && arguments[4] == 'nodata' && !arguments[3].to_i != 0) ||
+       (arguments.size == 4 && arguments[3] == 'nodata' && !arguments[1].to_i != 0) ||
+       (arguments.size == 3 && arguments[2] == 'nodata' && !arguments[1].to_i != 0)
 
       raise ClientError
     end

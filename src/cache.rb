@@ -13,7 +13,15 @@ class Cache
   end
 
   def get(arguments)
-    'get'
+    values = ''
+    arguments.each do |key|
+      if @hash.key?(key)
+        record = @hash[key]
+        values.insert(-1, "VALUE #{key} #{record.flags} #{record.exptime} #{record.bytes} #{record.cas_unique}\n#{record.data}\n")
+      end
+    end
+    p values.to_s + 'END'
+    values != '' ? "#{values}END\n" : Server::NOT_FOUND
   end
 
   def get_s(arguments)
@@ -51,7 +59,7 @@ class Cache
       @hash[arguments[0]] = Record.new(arguments[1].clamp(0, 65_535), # flags
                                        arguments[2],                  # exptime
                                        arguments[3],                  # bytes
-                                       nil,                  # cas unique
+                                       nil,                           # cas unique
                                        data)
       noreply.nil? ? Server::STORED : Server::NO_REPLY
     else
@@ -72,7 +80,7 @@ class Cache
       @hash[arguments[0]] = Record.new(arguments[1].clamp(0, 65_535), # flags
                                        arguments[2],                  # exptime
                                        arguments[3],                  # bytes
-                                       nil,                  # cas unique
+                                       nil,                           # cas unique
                                        data)
       noreply.nil? ? Server::STORED : Server::NO_REPLY
     else
